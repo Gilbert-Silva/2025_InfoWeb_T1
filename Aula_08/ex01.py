@@ -14,8 +14,12 @@ class Agua:
     def get_ano(self):
         return self.__ano       
     def set_consumo(self, v):
+        # testando a condição inválida
         if v < 0: raise ValueError("O consumo não pode ser negativo")
         self.__consumo = v 
+        # testando a condição válida
+        if v >= 0: self.__consumo = v
+        else: raise ValueError("O consumo não pode ser negativo")         
     def get_consumo(self):
         return self.__consumo       
     def valor(self):
