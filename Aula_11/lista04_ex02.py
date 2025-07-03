@@ -4,6 +4,8 @@ class Contato:
         self.__nome = n
         self.__email = e
         self.__fone = f
+    def get_id(self):
+        return self.__id    
     def get_nome(self):
         return self.__nome    
     def __str__(self):
@@ -39,16 +41,38 @@ class ContatoUI:
 
     @classmethod
     def listar(cls):
+        if len(cls.__contatos) == 0:
+            print("Nenhum contato cadastrado")
         for c in cls.__contatos:
             print(c)
 
     @classmethod
+    def listar_id(cls, id):
+        for c in cls.__contatos:
+            if c.get_id() == id: return c
+        return None    
+
+    @classmethod
     def atualizar(cls):
-        pass
+        cls.listar()
+        id = int(input("Informe o id do contato a ser atualizado: "))
+        c = cls.listar_id(id)
+        if c == None: print("Esse contato não existe")
+        else:
+            nome = input("Informe o novo nome: ")
+            email = input("Informe o novo e-mail: ")
+            fone = input("Informe o novo fone: ")
+            cls.__contatos.remove(c)
+            c = Contato(id, nome, email, fone)
+            cls.__contatos.append(c)
 
     @classmethod
     def excluir(cls):
-        pass
+        cls.listar()
+        id = int(input("Informe o id do contato a ser excluído: "))
+        c = cls.listar_id(id)
+        if c == None: print("Esse contato não existe")
+        else: cls.__contatos.remove(c)
 
     @classmethod
     def pesquisar(cls):
