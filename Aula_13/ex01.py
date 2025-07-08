@@ -2,17 +2,17 @@ from datetime import datetime
 from enum import Enum
 
 class Dias(Enum):
-    Segunda = 0,
-    Terça = 1,
-    Quarta = 2,
-    Quinta = 3,
-    Sexta = 4,
-    Sabado = 5,
+    Segunda = 0
+    Terça = 1
+    Quarta = 2
+    Quinta = 3
+    Sexta = 4
+    Sabado = 5
     Domingo = 6
 
 x = Dias.Terça
 print(x)
-print(type(x))    
+print(type(x))
 
 dias = ["segunda", "terça", "quarta", "quinta", "sexta", "sábado", "domingo"]
 
