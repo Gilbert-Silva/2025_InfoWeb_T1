@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+import json
 
 # Atributos - 6
 # Encapsulamento - 6
@@ -29,7 +30,13 @@ class Emprestimo:
     def data_devolucao(self): return self.__data_emprestimo + self.__periodo
     def __str__(self):
         return f"{self.__livro} {self.__data_emprestimo} {self.__periodo}"
-                                                          
+    def to_json(self):
+        dic = {}
+        dic["livro"] = self.__livro
+        dic["data_emprestimo"] = self.__data_emprestimo.strftime("%d/%m/%Y %H:%M")
+        dic["periodo"] = f"{self.__periodo.days}-{self.__periodo.seconds}"
+        return dic
+                                                         
 # Atributo - 5
 # Main - 5
 # Menu - 5
@@ -46,15 +53,17 @@ class UI:
     @classmethod
     def main(cls):
         op = 0
-        while op != 4:
+        while op != 6:
             op = cls.menu()
             if op == 1: cls.inserir()
             if op == 2: cls.listar()
             if op == 3: cls.calcular()
+            if op == 4: cls.abrir()
+            if op == 5: cls.salvar()
 
     @classmethod
     def menu(cls):
-        print("1-Inserir, 2-Listar, 3-Calcular, 4-Fim")
+        print("1-Inserir, 2-Listar, 3-Calcular, 4-Abrir, 5-Salvar, 6-Fim")
         return int(input("Informe uma opção: "))
 
     @classmethod
@@ -76,6 +85,15 @@ class UI:
         for t in cls.__objetos:
             if t.data_devolucao() < m.data_devolucao() : m = t
         print(m)
+
+    @classmethod
+    def abrir(cls):
+        pass
+
+    @classmethod
+    def salvar(cls):
+        with open("emprestimos.json", mode="w") as arquivo:
+            json.dump(cls.__objetos, arquivo, default = Emprestimo.to_json)
 
 UI.main()
 
